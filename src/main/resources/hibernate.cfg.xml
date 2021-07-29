@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
+<!--        <property name="connection.url">jdbc:postgresql://10.10.10.201:5432/chm_db</property>-->
+        <property name="connection.url">jdbc:postgresql://localhost:5432/photo_bot_db</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.username">postgres</property>
+        <!--suppress HibernateConfigDomInspection -->
+        <property name="connection.password">53721456</property>
+        <!--suppress HibernateConfigDomInspection -->
+        <!--<property name="connection.password">postgres_53721456</property>-->
+        <property name="current_session_context_class">thread</property>
+        <property name="connection.pool_size">20</property>
+        <property name="show_sql">false</property>
+        <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
+        <mapping class="entity.UserAccess"/>
+    </session-factory>
+</hibernate-configuration>
