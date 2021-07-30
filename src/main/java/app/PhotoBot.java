@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import services.UserAccessService;
-import utils.HttpConnector;
+import utils.HttpFileSaver;
 
 import java.util.List;
 
@@ -22,12 +22,12 @@ public class PhotoBot extends TelegramLongPollingBot {
 
     private final String token;
     private final String username;
-    private final HttpConnector connector;
+    private final HttpFileSaver connector;
 
     public PhotoBot(String token, String username, String fileDir) {
         this.token = token;
         this.username = username;
-        connector = new HttpConnector(token, fileDir);
+        connector = new HttpFileSaver(token, fileDir);
         instance = this;
     }
 

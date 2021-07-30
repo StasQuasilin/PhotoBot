@@ -1,6 +1,7 @@
 package utils;
 
 import app.PhotoBot;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -17,14 +18,16 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 
-public class HttpConnector {
+public class HttpFileSaver {
     private static final String RESULT = "result";
     private static final String FILE_PATH = "file_path";
     private static final String FILE_UNIQUE_ID = "file_unique_id";
+    private static final char DOT = '.';
     private final String token;
     private final String fileDir;
+    private final Logger log = Logger.getLogger(HttpFileSaver.class);
 
-    public HttpConnector(String token, String dir) {
+    public HttpFileSaver(String token, String dir) {
         this.token = token;
         if (dir == null){
             dir = "";
@@ -55,8 +58,10 @@ public class HttpConnector {
     private void parseResult(String string, long chatId) throws ParseException, IOException {
         final JSONObject parse = (JSONObject) parser.parse(string);
         final JSONObject result = (JSONObject) parse.get(RESULT);
+        final String path = String.valueOf(result.get(FILE_PATH));
+        final String extension = path.substring(path.indexOf(DOT));
         final String s = LocalDate.now().toString();
-        loadFile(String.valueOf(result.get(FILE_PATH)), this.fileDir + s + "/" + result.get(FILE_UNIQUE_ID), chatId);
+        loadFile(path, this.fileDir + s + "/" + result.get(FILE_UNIQUE_ID) + extension, chatId);
     }
 
     private void loadFile(String path, String fileName, long chatId) throws IOException {
@@ -65,10 +70,14 @@ public class HttpConnector {
         checkPath(fileName);
         Files.copy(url.openStream(), Paths.get(fileName), StandardCopyOption.REPLACE_EXISTING);
         typeAboutLoad(fileName, chatId);
+        log.info("File '" + fileName + "' write successful");
     }
 
     private void checkPath(String fileName) {
-        new File(fileName).mkdirs();
+        final File file = new File(fileName);
+        if (file.mkdirs()){
+            log.info("Path " + file.getParentFile().getAbsolutePath() + " create");
+        }
 //        file.getParentFile().mkdirs();
     }
 

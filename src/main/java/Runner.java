@@ -1,4 +1,5 @@
 import app.PhotoBot;
+import org.apache.log4j.Logger;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -12,6 +13,7 @@ public class Runner {
     private static final String TOKEN = "token";
     private static final String USERNAME = "username";
     private static final String FILE_DIR = "fileDir";
+    private static final Logger log = Logger.getLogger(Runner.class);
 
     public static void main(String[] args) throws TelegramApiException, IOException {
         PropsReader propsReader = new PropsReader();
@@ -25,7 +27,15 @@ public class Runner {
         final String token = read.getProperty(TOKEN);
         final String username = read.getProperty(USERNAME);
         final String fileDir = read.getProperty(FILE_DIR);
+        outputDir(fileDir);
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
         telegramBotsApi.registerBot(new PhotoBot(token, username, fileDir));
+        log.info("Ready...");
+    }
+
+    private static void outputDir(String fileDir) {
+        if (fileDir != null && !fileDir.isEmpty()){
+            log.info("File directory: " + fileDir);
+        }
     }
 }

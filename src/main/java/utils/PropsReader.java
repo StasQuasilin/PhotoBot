@@ -3,6 +3,8 @@ package utils;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class PropsReader {
@@ -33,7 +35,7 @@ public class PropsReader {
 
     private void readFile(File file, Properties properties) throws IOException {
         FileInputStream fis = new FileInputStream(file);
-        properties.load(fis);
+        properties.load(new InputStreamReader(fis, StandardCharsets.UTF_8));
         fis.close();
     }
 }

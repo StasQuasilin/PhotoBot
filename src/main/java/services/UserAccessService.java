@@ -29,7 +29,10 @@ public class UserAccessService {
     public boolean login(String text, Long chatId) {
         boolean login = false;
         if (checkUserPassword(text, chatId)){
-            UserAccess userAccess = new UserAccess();
+            UserAccess userAccess = dao.getUserAccess(chatId);
+            if (userAccess == null){
+                userAccess = new UserAccess();
+            }
             userAccess.setChatId(chatId);
             userAccess.setPassword(text);
             dao.saveAccess(userAccess);

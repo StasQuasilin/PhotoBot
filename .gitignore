@@ -1,2 +1,9 @@
 # Project exclude paths
 /target/
+.idea/
+PhotoBot.iml
+bot.properties
+log/
+out/
+src/main/java/META-INF/
+user_access.properties

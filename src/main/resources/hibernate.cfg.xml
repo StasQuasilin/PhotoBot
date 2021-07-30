@@ -13,8 +13,9 @@
         <property name="connection.password">53721456</property>
         <!--suppress HibernateConfigDomInspection -->
         <!--<property name="connection.password">postgres_53721456</property>-->
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="current_session_context_class">thread</property>
-        <property name="connection.pool_size">20</property>
+        <property name="connection.pool_size">5</property>
         <property name="show_sql">false</property>
         <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
         <mapping class="entity.UserAccess"/>
